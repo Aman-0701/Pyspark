@@ -1,1 +1,48 @@
+### Reading csv file
+df = spark.read.format('csv').option('inferSchema',True).option('header',True).load('path of file')
+
+### Reading json file
+df_json = spark.read.format('json').option('inferSchema',True).option('header',True).option('multiLine',False).load('path')
+
+### Display data or show first few records
+df.display()
+df.limit(100)
+
+### Schema Definition
+df.printSchema()
+
+### Importing all funtions and types
+from pyspark.sql.functions import *
+from pyspark.sql.types import *
+
+### Selecting Col
+df.select(col('a'),col('b')
+
+### Alias or Renaming Column
+df.select(col('a').alias('b'))
+df.withColumnRenamed('old_name','new_name')
+
+### Filter the data
+df.filter( (col('a')==Aman) & (col('b') isin('Abc','bce')))
+
+### Creating New column
+df.withColumn('New',lit('new'))
+
+### replacing exisitng column values
+df.withColumn('col_a',regexp_replace('col_a','Aman','Aditya'))
+
+### TypeCasting
+df.withColumn('col_a',col('col_a').cast(StringType()))
+
+### Sort Data
+df.sort(col('col_a').asc())
+df.sort(['col_a','col_b'],ascending=[0,0])
+
+### Dropping columns
+df.drop('col_1','col_2')
+
+### Drop Duplicates
+df.dropDuplicates()
+df.dropDuplicates(subset=['col_1'])
+
 
