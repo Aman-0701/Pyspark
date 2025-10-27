@@ -87,6 +87,23 @@ df.withColumn('flag',when(col('A')=='veg','Vegetarian').otherwise('Non_veg')
 ### Joins
 df1.join(df2,df1['dept_id']==df2['dept_id'],'inner')
 
+### Window Functions
+from pyspark.sql.window import Window
+
+df.withColumn('row_number',row_number().over(Window.orderBy('A')))\
+  .withColumn('dense_rank',dense_rank().over(Window.orderBy('A')))
+
+df.withColumn('cum_sum',sum('A').over(Window.orderBy(col('B').desc().rowsBetween(Window.unbondedPreceding,Window.currentRow)))\
+  .withColumn('cum_sum1',sum('A').over(Window.partitionBy('C').orderBy(col('B').desc().rowsBetween(Window.unboundedPreceding,Window.currentRow)))
+
+### User Defined Fucntion
+def my_func(x):
+  return x*x
+
+my_udf = udf(my_func)
+
+df.withColumn('sc',my_udf('A'))
+
 
 
 
