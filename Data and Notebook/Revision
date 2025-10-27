@@ -45,4 +45,48 @@ df.drop('col_1','col_2')
 df.dropDuplicates()
 df.dropDuplicates(subset=['col_1'])
 
+### Preparing DataFrame
+data1 = [('1','abc'),('2','bfg')]
+schema1 = 'id STRING, name STRING'
+
+df1 = spark.createDataFrame(data1,schema1)
+
+data2 = [('3','adc'),('4','brg')]
+schema1 = 'id STRING, name STRING'
+
+### Union and Union All
+df1.union(df2)
+df1.unionByName(df2)
+
+### InitiCap String function
+df.select(inticap(col('A'))
+
+### Date Function
+df.withColumn('today_date',curr_date())
+df.withColumn('next_week',dateadd('today_date',7))
+df.withColumn('datediff',date_diff('next_week','today_date')
+df.withColumn('next_week',date_format('next_week','dd/MMMM/yyyy'))
+
+### Dropping nulls
+df.dropna('all')
+df.dropna('any')
+df.dropna(subset=['A'])
+
+### Split & Indexing
+df.withColumn('A',split('A',' ')[1])
+
+### Grouping
+df.groupby('A','B').agg(sum('C').alias('sum'),avg('B').alias('average'))
+
+### Pivot
+df.groupby('A').pivot('B').agg(sum('C'))
+
+### When Otherwise
+df.withColumn('flag',when(col('A')=='veg','Vegetarian').otherwise('Non_veg')
+
+### Joins
+df1.join(df2,df1['dept_id']==df2['dept_id'],'inner')
+
+
+
 
