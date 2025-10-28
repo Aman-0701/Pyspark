@@ -104,6 +104,23 @@ my_udf = udf(my_func)
 
 df.withColumn('sc',my_udf('A'))
 
+### Saving contents of dataframe to external storage
+df.write.format('csv').save('location')
+df.write.format('csv').mode('append').save('location')
+df.write.format('csv').mode('overrwrite').save('location')
+df.write.format('csv').mode('error').save('location')
+df.write.format('csv').mode('ignore').save('location')
+
+### Temp View - When we want to use spark, first we need to convert dataframe into b=object using temp_view
+df.createTempView('my_view')
+%sql
+select * from my_view where col = 'A'
+-- converting back to pyspark
+df_sql =spark.sql("select * from my_view where col = 'A'")
+
+
+
+
 
 
 
