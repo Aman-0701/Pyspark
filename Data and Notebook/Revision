@@ -118,6 +118,8 @@ select * from my_view where col = 'A'
 -- converting back to pyspark
 df_sql =spark.sql("select * from my_view where col = 'A'")
 
+-------------------------------------------------Completed---------------------------------------------------------------------
+
 
 
 
